@@ -1,0 +1,9 @@
+author: SteveGrKek
+name: ColorControl
+main: ru.sgk.colorcontrol.MainColorControl
+version: 0.1-SNAPSHOT
+commands:
+  colorcontrol:
+    usage: colorcontrol [args..]
+    description: main ColorControl command
+    aliace: cc

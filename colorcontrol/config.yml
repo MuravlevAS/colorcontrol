@@ -1,0 +1,23 @@
+debug: true
+
+database:
+  host: 127.0.0.1
+  username: root
+  password: ''
+  dbname: grendcity
+
+gameserver: true
+
+# game:
+#   name: name
+#   # Высота игрового поля
+#   # Ставьте минимум 5, либо вообще не меняйте
+#   hight: 50
+#   cubes: []
+#   
+#   
+#   
+#   
+  
+# 20 числа ютуб
+# 14 числа хостинг
