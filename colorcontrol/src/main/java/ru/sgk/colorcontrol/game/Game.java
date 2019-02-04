@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,7 +38,7 @@ public class Game
 	private boolean started = false;   		// Запущена ли игра
 	private boolean deathmatch = false;		
 	private int countdownTimer;				// Таймер обратного отсчёта (до начала игры)
-	public String world;
+	public World world;
 	public List<GameCube> cubes = new ArrayList<GameCube>();
 	public Game()
 	{
@@ -242,9 +243,11 @@ public class Game
 					}
 					if (deathmatch)
 					{
+						if (world == null) world = players.get(0).player.getWorld();
 						MainColorControl.debugMessage("§aИгра закончена");
-						Bukkit.getWorld(players.get(0).player.getWorld().getName()).getWorldBorder().setCenter(mapCenter);
-						Bukkit.getWorld(players.get(0).player.getWorld().getName()).getWorldBorder().setSize(0,5*60);
+						
+						world.getWorldBorder().setCenter(mapCenter);
+						world.getWorldBorder().setSize(0,(deathmatchTime + deathmatchDuration) - timer);
 						
 						// Конец игры
 						if (teams.size() == 1)

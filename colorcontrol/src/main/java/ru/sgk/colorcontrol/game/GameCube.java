@@ -104,9 +104,6 @@ public class GameCube
 			MainColorControl.debugMessage("§cВ области уже есть блоки. Нужно поставить куб в другое место");
 			return;
 		}
-		
-		
-		
 	}
 	
 	private boolean isRegionEmpty(Location min, Location max)
