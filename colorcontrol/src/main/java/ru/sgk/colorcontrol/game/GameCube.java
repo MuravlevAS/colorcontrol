@@ -27,6 +27,7 @@ public class GameCube
 	public static int y = 50;
 	
 	public List<GamePlayer> players = new ArrayList<GamePlayer>(); // 
+	@SuppressWarnings("unchecked")
 	public GameCube() 
 	{
 		this.rotateInterval = 5*60;
@@ -38,6 +39,7 @@ public class GameCube
 		this.edge = new Block[44];
 	}
 
+	@SuppressWarnings("unchecked")
 	public GameCube(Location PlayerLoc, GameTeam team, ItemStack item)
 	{
 		this.rotateInterval = 5*60;
@@ -51,9 +53,13 @@ public class GameCube
 		
 		this.x = (int) PlayerLoc.getX();
 		this.z = (int) PlayerLoc.getZ();
+
+		PlayerLoc.setY(y);
+		place(PlayerLoc);
 		
 		this.cubeTeam = team;
 	}
+	@SuppressWarnings("unchecked")
 	public GameCube(Location PlayerLoc, ItemStack item)
 	{
 		this.rotateInterval = 5*60;
@@ -71,6 +77,8 @@ public class GameCube
 		this.x = (int) PlayerLoc.getX();
 		this.z = (int) PlayerLoc.getZ();
 		
+		PlayerLoc.setY(y);
+		place(PlayerLoc);
 		cubeTeam = null;
 	}
 
@@ -104,6 +112,8 @@ public class GameCube
 			MainColorControl.debugMessage("§cВ области уже есть блоки. Нужно поставить куб в другое место");
 			return;
 		}
+		
+		
 	}
 	
 	private boolean isRegionEmpty(Location min, Location max)

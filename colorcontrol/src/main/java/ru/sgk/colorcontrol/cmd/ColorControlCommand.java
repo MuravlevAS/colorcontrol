@@ -10,19 +10,30 @@ import ru.sgk.colorcontrol.game.Game;
 
 public class ColorControlCommand implements CommandExecutor
 {
-	// cc join
-	// cc leave
-	// cc create <name> <maxPlayers>
-	// cc setteams <2|4>
-	// cc removeteam
-	// cc setdeathmatch <time>
-	// cc setdeathmatchduration <time>
-	// cc maxplayers <amount>
-	// cc minplayers <amount>
-	// cc start
+	// cc join									- Тут всё ясно
+	// cc leave									- -------------
+	// cc create <name> <maxPlayers>			- -------------
+	// cc setteams <2|4>						- Устанавливает количество команд 2 или 4
+	// cc setteamhealth							- устанавливает количество жизней в команде
+	// cc setdeathmatch <timeInMinutes>			- Устанавливает время с которого начинается дезматч
+	// cc setdeathmatchduration <timeInMinutes> - Устанавливает длительность дезматча
+	// Максимальная продолжительность игры равна сумме аргументов двух предыдущих команд
+	// cc maxplayers <amount> 					- количество игроков с которого начинается игра
+	// cc minplayers <amount> 					- максимальное количество игроков
+	// cc start									- Тут всё ясно
+	// cc stop									- -------------
 	
 	private boolean gameServer;
 	
+	public boolean isDev(CommandSender sender)
+	{
+		return sender.hasPermission("colorcontrol.dev");
+	}
+	
+	public boolean isAdmin(CommandSender sender)
+	{
+		return sender.hasPermission("colorcontrol.admin");
+	}
 	public ColorControlCommand() 
 	{
 		gameServer = MainColorControl.config.getBoolean("gameserver");
@@ -37,7 +48,7 @@ public class ColorControlCommand implements CommandExecutor
 				if (args[0].equalsIgnoreCase("start"))
 				{
 					MainColorControl.debugMessage("§rИгрок ввёл команду §сstart");
-					if (sender.hasPermission("colorcontrol.admin"))
+					if (isAdmin(sender))
 					{
 						MainColorControl.debugMessage("§rУ него есть на это права");
 						if (gameServer)
@@ -60,7 +71,7 @@ public class ColorControlCommand implements CommandExecutor
 				else if (args[0].equalsIgnoreCase("stop"))
 				{
 					MainColorControl.debugMessage("§rИгрок ввёл команду §сstop");
-					if (sender.hasPermission("colorcontrol.admin"))
+					if (isAdmin(sender))
 					{
 						MainColorControl.debugMessage("§rУ него есть на это права");
 						if (gameServer)
@@ -95,7 +106,7 @@ public class ColorControlCommand implements CommandExecutor
 				// odmen commands
 				else if (args[0].equalsIgnoreCase("create"))
 				{
-					if (!sender.hasPermission("colorcontrol.admin"))
+					if (!isDev(sender))
 					{
 						sendMessage(sender, "§cУ вас недостаточно прав");
 						return true;
@@ -129,7 +140,7 @@ public class ColorControlCommand implements CommandExecutor
 				}
 				else if (args[0].equalsIgnoreCase("setteams"))
 				{
-					if (!sender.hasPermission("colorcontrol.admin"))
+					if (!isDev(sender))
 					{
 						sendMessage(sender, "§cУ вас недостаточно прав");
 						return true;
@@ -150,7 +161,7 @@ public class ColorControlCommand implements CommandExecutor
 				}
 				else if (args[0].equalsIgnoreCase("teams"))
 				{
-					if (!sender.hasPermission("colorcontrol.admin"))
+					if (!isDev(sender))
 					{
 						sendMessage(sender, "§cУ вас недостаточно прав");
 						return true;
