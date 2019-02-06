@@ -8,15 +8,19 @@ database:
 
 gameserver: true
 
+# Высота игрового поля
+# Ставьте минимум 5, либо вообще не меняйте
+hight: 50
+
 # game:
 #   name: name
-#   # Высота игрового поля
-#   # Ставьте минимум 5, либо вообще не меняйте
-#   hight: 50
 #   cubes: []
-#   
-#   
-#   
+#   teams: []
+#   maxPlayers: 10
+#   minPlayers: 10
+#   center: {}
+#   dmTime: 900
+#   dmDur: 300
 #   
   
 # 20 числа ютуб

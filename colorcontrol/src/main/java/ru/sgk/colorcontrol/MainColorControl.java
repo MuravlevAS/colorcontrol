@@ -30,14 +30,17 @@ public class MainColorControl extends JavaPlugin
 		plugin = this;
 		initConfiguration();
 		debug = config.getBoolean("debug");
+		
 		new MySQLMain();
+		
 		regCmdList();
 		regListeners();
-		initGame();
+
 		world = Bukkit.getServer().getWorlds().get(0);
-		
 		world.setAutoSave(false);
 		world.save();
+		
+		initGame();
 		logger.info("§aПлагин включён!");
 	}
 	
