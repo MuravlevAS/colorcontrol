@@ -10,9 +10,9 @@ import ru.sgk.colorcontrol.game.Game;
 
 public class ColorControlCommand implements CommandExecutor
 {
-	// cc join									- Тут всё ясно
-	// cc leave									- -------------
-	// cc create <name> <maxPlayers>			- -------------
+	// cc join									- Тут всё ясно (join будет уже в плагине для лобби)
+	//// cc leave									- -------------
+	//// cc create <name> <maxPlayers>			- -------------
 	// cc setteams <2|4>						- Устанавливает количество команд 2 или 4
 	// cc setteamhealth							- устанавливает количество жизней в команде
 	// cc setdeathmatch <timeInMinutes>			- Устанавливает время с которого начинается дезматч
