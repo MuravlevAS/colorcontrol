@@ -21,7 +21,7 @@ public class Game
 	public List<GamePlayer> players;		// Сами игроки
 	public List<GameTeam> teams;			// Команды в игре
 	public int playersCount;				// Текущее количество игроков в игре
-	public int timerIndex;					// Индекс таймера. Нужен для остановки таймера (игры)
+	public int timerIndex = -1;				// Индекс таймера. Нужен для остановки таймера (игры)
 	public int maxPlayers;					// Максимальное количество игроков на карте
 	public int minPlayers;					// Минимальное количество игроков (со скольки игроков начинается игра)
 	public String gameName;					// Название игры
@@ -39,6 +39,9 @@ public class Game
 	private boolean deathmatch = false;		
 	private int countdownTimer;				// Таймер обратного отсчёта (до начала игры)
 	public World world;
+	
+	private boolean stop;
+	
 	public List<GameCube> cubes = new ArrayList<GameCube>();
 	public Game()
 	{
@@ -183,7 +186,7 @@ public class Game
 			players.remove(player);
 			playersCount--;
 		}
-		if (playersCount == 0)
+		if (playersCount == 0 && !stop)
 			stop();
 	}
 	
@@ -319,17 +322,15 @@ public class Game
 	
 	public void stop()
 	{
+		if (stop) return;
 		Bukkit.getServer().getScheduler().cancelTask(timerIndex);
+		timerIndex = -1;
 		started = false;
 		deathmatch = false;
 		timer = 0;
 		livingPlayers = null;
-		
-		for (GamePlayer player : players)
-		{
-			leave(player);
-		}
-		timerIndex = -1;
+		stop = true;
+		reloadWorld();
 	}
 	
 	public List<Player> gamePlayersToPlayers()
