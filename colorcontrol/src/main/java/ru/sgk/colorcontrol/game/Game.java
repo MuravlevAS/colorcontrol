@@ -28,8 +28,8 @@ public class Game
 	
 	public Location mapCenter;				// Центр карты
 	
-	public int deathmatchTime;				// Время с которого начинается дезмач. В секундах
-	public int deathmatchDuration = 5*60; 	// Продолжительность дезмач и всей игры. В секундах
+	public int deathmatchTime = 900;		// Время с которого начинается дезмач. В секундах
+	public int deathmatchDuration = 300; 	// Продолжительность дезмач и всей игры. В секундах
 
 	public List<GamePlayer> livingPlayers = null;
 	public CCScoreboard scoreboard;
@@ -41,6 +41,8 @@ public class Game
 	public World world;
 	
 	private boolean stop;
+	
+	public boolean forcedStart = false;
 	
 	public List<GameCube> cubes = new ArrayList<GameCube>();
 	public Game()
@@ -206,7 +208,7 @@ public class Game
 			public void run() 
 			{
 				if (timer >= Integer.MAX_VALUE) timer = 0;
-				if (!started && playersCount < minPlayers)
+				if (!started && playersCount < minPlayers && !forcedStart)
 				{
 					MainColorControl.debugMessage("§cНе набрано минимальное количество игроков для начала игры");
 					broadcastMessage("§cНе набрано минимальное количество игроков для начала игры");
@@ -223,7 +225,7 @@ public class Game
 					stop();
 				}
 				
-				if (playersCount == maxPlayers)
+				if (playersCount == maxPlayers || (forcedStart && playersCount > 0))
 				{
 					if (countdownTimer > 5)
 					{
@@ -344,6 +346,10 @@ public class Game
 	}
 	
 	public void resetWorld()
+	{
+		
+	}
+	public void saveInConfig()
 	{
 		
 	}
