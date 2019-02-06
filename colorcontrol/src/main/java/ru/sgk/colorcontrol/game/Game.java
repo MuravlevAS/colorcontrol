@@ -8,7 +8,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -347,17 +347,41 @@ public class Game
 		return players;
 	}
 	
+	public static void getFromConfig()
+	{
+		FileConfiguration config = MainColorControl.initConfiguration();
+		int maxPlayers = config.getInt("game.max-players");
+		int minPlayers = config.getInt("game.min-players");
+		int deathmatchTime = config.getInt("game.dm-time");
+		int deathmatchDuration = config.getInt("game.dm-dur");
+		Location gameCenter = (Location)config.get("game.center");
+		List<GameTeam> teams = new ArrayList<GameTeam>();
+		List<GameCube> cubes = new ArrayList<GameCube>();		
+		for (Object gameTeam : config.getList("game.teams")) 
+		{
+			teams.add((GameTeam) gameTeam);
+		}
+		for (Object gameCube : config.getList("game.cubes")) 
+		{
+			cubes.add((GameCube)gameCube);
+		}
+		newGame(maxPlayers, minPlayers, deathmatchTime, deathmatchDuration, teams, gameCenter);
+		
+		MainColorControl.game.cubes = cubes;
+		
+	}
+	
 	public void saveInConfig()
 	{
 		MainColorControl.config.getList("");
 		MainColorControl.config.set("game.name", gameName);
-		MainColorControl.config.set("game.teams", teams);
-		MainColorControl.config.set("game.cubes", cubes);
 		MainColorControl.config.set("game.max-players", maxPlayers);
 		MainColorControl.config.set("game.min-players", minPlayers);
 		MainColorControl.config.set("game.center", mapCenter);
 		MainColorControl.config.set("game.dm-time", deathmatchTime);
 		MainColorControl.config.set("game.dm-dur", deathmatchDuration);
+		MainColorControl.config.set("game.teams", teams);
+		MainColorControl.config.set("game.cubes", cubes);
 		MainColorControl.saveConfiguration();
 	}
 }

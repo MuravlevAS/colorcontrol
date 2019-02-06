@@ -14,11 +14,11 @@ hight: 50
 
 # game:
 #   name: name
-#   cubes: []
-#   teams: []
-#   maxPlayers: 10
-#   minPlayers: 10
+#   max-players: 10
+#   min-players: 10
 #   center: {}
 #   dm-time: 900
 #   dm-dur: 300
+#   cubes: []
+#   teams: []
  
