@@ -44,7 +44,7 @@ public class MainColorControl extends JavaPlugin
 	@Override
 	public void onDisable() 
 	{
-		Bukkit.getServer().getWorld("world").save();
+		world.save();
 		saveConfiguration();
 		MySQLMain.disconnect();
 		logger.info("§aПлагин выключен!");
