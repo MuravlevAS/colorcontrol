@@ -9,7 +9,7 @@ database:
 gameserver: true
 
 # Высота игрового поля
-# Ставьте минимум 5, либо вообще не меняйте
+# минимум 5 
 hight: 50
 
 # game:
@@ -19,9 +19,6 @@ hight: 50
 #   maxPlayers: 10
 #   minPlayers: 10
 #   center: {}
-#   dmTime: 900
-#   dmDur: 300
-#   
-  
-# 20 числа ютуб
-# 14 числа хостинг
+#   dm-time: 900
+#   dm-dur: 300
+ 
