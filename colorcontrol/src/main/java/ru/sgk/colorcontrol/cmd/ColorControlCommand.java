@@ -108,27 +108,32 @@ public class ColorControlCommand implements CommandExecutor
 				{
 					if (!isDev(sender))
 					{
-						sendMessage(sender, "§cУ вас недостаточно прав");
+						sendMessage(sender, "§cУ вас недостаточно прав!");
 						return true;
 					}
 					if (!(sender instanceof Player)) {
-						sendMessage(sender, "§cКоманда только для игроков");
+						sendMessage(sender, "§cКоманда только для игроков!");
 						return true;
 					}
 					if (!gameServer)
 					{
-						sendMessage(sender, "§cСервер не является игровым");
+						sendMessage(sender, "§cСервер не является игровым!");
+						return true;
+					}
+					if (MainColorControl.game == null)
+					{
+						sendMessage(sender, "§cИгра уже создана!");
 						return true;
 					}
 					Player player = (Player)sender;
-					if (args.length == 2)
+					if (args.length == 3)
 					{
 						try {
-							int maxPlayers = Integer.parseInt(args[1]);
+							int maxPlayers = Integer.parseInt(args[2]);
 							Game.newGame(maxPlayers, player.getLocation());
 						}catch(Exception e)
 						{
-							sendMessage(sender, "§cНеправильно введены аргументы");
+							sendMessage(sender, "§cНеправильно введены аргументы!");
 							sendMessage(sender, "§cИспользование команды: /create <name> <maxPlayers>");
 						}
 					}
@@ -172,6 +177,20 @@ public class ColorControlCommand implements CommandExecutor
 						return true;
 					}
 					
+				}
+				else if (args[0].equalsIgnoreCase("setcube"))
+				{
+					if (!(sender instanceof Player)) return true;
+					Player player = (Player) sender;
+					if (args.length == 2)
+					{
+						MainColorControl.debugMessage("§rsetcube is correct");
+						MainColorControl.game.createCube(player.getLocation(), args[1]);
+					}
+					else
+					{
+						sendMessage(sender, "§cИспользование: /colorcontrol setcube <id> [team]");
+					}
 				}
 				else if (args[0].equalsIgnoreCase("help"))
 				{
