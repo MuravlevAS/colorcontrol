@@ -152,6 +152,45 @@ public class GameCube
 						MainColorControl.debugMessage("§aУстановка граней куба");
 						placeLoc.getBlock().setType(Material.CONCRETE);
 					}
+					
+					/*
+					 * Координаты граней куба, относительно координат самого куба
+					 * 0 - верх
+					 * 1 - низ
+					 * 2 - лево
+					 * 3 - право
+					 * 4 - задняя сторона
+					 * 5 - лицевая сторона
+					 * Лицевую и заднюю стороны определяет ось Ox. Координата X задней стороны меньше чем координата X лицевой
+					 * Левую и правую стороны определяет ось Oz. Координата Z левой стороны меньше чем координата Z правой
+					 * Верх и низ определяет ось Oy. Координата Y верхней стороны всегда больше, чем координата Y нижней
+					 */
+					
+					if (y == max.getBlockY() && (x != min.getBlockX() && x != max.getBlockX()) && (z != min.getBlockZ() && z != max.getBlockZ()))
+					{
+						facet[0].add(placeLoc.getBlock());
+					}
+					else if (y == min.getBlockY() && (x != min.getBlockX() && x != max.getBlockX()) && (z != min.getBlockZ() && z != max.getBlockZ()))
+					{
+						facet[1].add(placeLoc.getBlock());
+					}
+					else if (z == min.getBlockZ() && (y != min.getBlockY() && y != max.getBlockY()) && (x != min.getBlockX() && x != max.getBlockX()))
+					{
+						facet[2].add(placeLoc.getBlock());
+					}
+					else if (z == max.getBlockZ() && (y != min.getBlockY() && y != max.getBlockY()) && (x != min.getBlockX() && x != max.getBlockX()))
+					{
+						facet[3].add(placeLoc.getBlock());
+					}
+					else if (x == min.getBlockZ() && (y != min.getBlockY() && y != max.getBlockY()) && (z != min.getBlockZ() && z != max.getBlockZ()))
+					{
+						facet[4].add(placeLoc.getBlock());
+					}
+					else if (x == max.getBlockZ() && (y != min.getBlockY() && y != max.getBlockY()) && (z != min.getBlockZ() && z != max.getBlockZ()))
+					{
+						facet[5].add(placeLoc.getBlock());
+					}
+					activeFacet = 0;
 				}
 			}
 		}
@@ -180,8 +219,63 @@ public class GameCube
 		return true;
 	}
 	
+	/*
+	 * Координаты граней куба, относительно координат самого куба
+	 * 0 - верх
+	 * 1 - низ
+	 * 2 - лево
+	 * 3 - право
+	 * 4 - задняя сторона
+	 * 5 - лицевая сторона
+	 * Лицевую и заднюю стороны определяет ось Ox. Координата X задней стороны меньше чем координата X лицевой
+	 * Левую и правую стороны определяет ось Oz. Координата Z левой стороны меньше чем координата Z правой
+	 * Верх и низ определяет ось Oy. Координата Y верхней стороны всегда больше, чем координата Y нижней
+	 */
+	
+	private void swapFacets(int oldFacet, int newFacet) 
+	{
+		Block tmpBlock;
+		for (int i = 0; i < facet[oldFacet].size(); i++) 
+		{
+			tmpBlock = facet[newFacet].get(i);
+			facet[newFacet].set(i, facet[oldFacet].get(i));
+			facet[newFacet].set(i, tmpBlock);
+		}
+	}
+	
 	public void rotate()
 	{
-		
+		int oldFacet = activeFacet;
+		if (activeFacet == 0)
+		{
+			activeFacet = 1;
+			swapFacets(oldFacet, activeFacet);
+			
+		}
+		else if (activeFacet == 1)
+		{
+			activeFacet = 2;
+			swapFacets(oldFacet, activeFacet);
+		}
+		else if (activeFacet == 2)
+		{
+			activeFacet = 3;
+			swapFacets(oldFacet, activeFacet);
+		}
+		else if (activeFacet == 3)
+		{
+			activeFacet = 4;
+			swapFacets(oldFacet, activeFacet);
+		}
+		else if (activeFacet == 4)
+		{
+			activeFacet = 5;
+			swapFacets(oldFacet, activeFacet);
+		}
+		else if (activeFacet == 5)
+		{
+			activeFacet = 0;
+			swapFacets(oldFacet, activeFacet);
+		}
 	}
 }

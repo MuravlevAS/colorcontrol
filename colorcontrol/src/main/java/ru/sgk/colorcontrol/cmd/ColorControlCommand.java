@@ -10,10 +10,11 @@ import ru.sgk.colorcontrol.game.Game;
 
 public class ColorControlCommand implements CommandExecutor
 {
-	// cc join									- Тут всё ясно (join будет уже в плагине для лобби)
-	//// cc leave									- -------------
+	// cc join									- Тут всё ясно (join будет уже в отдельном плагине для лобби, это я сам сделаю)
+	//// cc leave								- -------------
 	//// cc create <name> <maxPlayers>			- -------------
 	// cc setteams <2|4>						- Устанавливает количество команд 2 или 4
+	// cc setcenter								- Устанавливает центр поля
 	// cc setteamhealth							- устанавливает количество жизней в команде
 	// cc setdeathmatch <timeInMinutes>			- Устанавливает время с которого начинается дезматч
 	// cc setdeathmatchduration <timeInMinutes> - Устанавливает длительность дезматча
@@ -213,8 +214,4 @@ public class ColorControlCommand implements CommandExecutor
 		sendMessage(sender, "§eСписок команд:");
 		sender.sendMessage("§e");
 	}
-//	private void sendMessage(Player sender, String message)
-//	{
-//		sender.sendMessage(MainColorControl.prefix + message);
-//	}
 }

@@ -27,7 +27,7 @@ public class Game
 	public int minPlayers;					// Минимальное количество игроков (со скольки игроков начинается игра)
 	public String gameName;					// Название игры
 	
-	public Location mapCenter;				// Центр карты
+	public Location gameCenter;				// Центр карты
 	
 	public int deathmatchTime = 900;		// Время с которого начинается дезмач. В секундах
 	public int deathmatchDuration = 300; 	// Продолжительность дезмач и всей игры. В секундах
@@ -56,6 +56,11 @@ public class Game
 	/** static methods **/
 	/********************/
 
+	public void setCenter(Location gameCenter)
+	{
+		this.gameCenter = gameCenter;
+	}
+	
 	public static void newGame(	int maxPlayers, int minPlayers, int deathmatchTime, int deathmatchDuration,
 								List<GameTeam> teams, Location gameCenter)
 	{
@@ -67,7 +72,7 @@ public class Game
 		if (teams != null)
 			MainColorControl.game.teams = teams;
 		if (gameCenter != null)
-			MainColorControl.game.mapCenter = gameCenter;
+			MainColorControl.game.gameCenter = gameCenter;
 	}
 
 	public static void newGame(	int maxPlayers, int minPlayers,
@@ -252,7 +257,7 @@ public class Game
 						if (world == null) world = players.get(0).player.getWorld();
 						MainColorControl.debugMessage("§aИгра закончена");
 						
-						world.getWorldBorder().setCenter(mapCenter);
+						world.getWorldBorder().setCenter(gameCenter);
 						world.getWorldBorder().setSize(0,(deathmatchTime + deathmatchDuration) - timer);
 						
 						// Конец игры
@@ -377,7 +382,7 @@ public class Game
 		MainColorControl.config.set("game.name", gameName);
 		MainColorControl.config.set("game.max-players", maxPlayers);
 		MainColorControl.config.set("game.min-players", minPlayers);
-		MainColorControl.config.set("game.center", mapCenter);
+		MainColorControl.config.set("game.center", gameCenter);
 		MainColorControl.config.set("game.dm-time", deathmatchTime);
 		MainColorControl.config.set("game.dm-dur", deathmatchDuration);
 		MainColorControl.config.set("game.teams", teams);

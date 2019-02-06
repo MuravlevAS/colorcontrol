@@ -35,7 +35,6 @@ public class MainColorControl extends JavaPlugin
 		
 		regCmdList();
 		regListeners();
-
 		world = Bukkit.getServer().getWorlds().get(0);
 		world.setAutoSave(false);
 		world.save();
@@ -53,11 +52,12 @@ public class MainColorControl extends JavaPlugin
 		logger.info("§aПлагин выключен!");
 	}
 	
-	public static void initConfiguration() 
+	public static FileConfiguration initConfiguration() 
 	{
 		config = plugin.getConfig();
 		config.options().copyDefaults(true);
 		debugMessage("§rКонфиг загружен");
+		return config;
 	}
 	public static void saveConfiguration()
 	{
@@ -89,7 +89,7 @@ public class MainColorControl extends JavaPlugin
 		if (!config.getBoolean("gameserver"))
 			return;
 		if (!config.contains("game")) return;
-		
+		Game.getFromConfig();
 		
 	}
 	
