@@ -6,4 +6,4 @@ commands:
   colorcontrol:
     usage: colorcontrol [args..]
     description: main ColorControl command
-    aliace: cc
+    aliases: [cc]
