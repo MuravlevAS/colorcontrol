@@ -49,16 +49,33 @@ public class GameTeam
 		this.teamSize = teamSize;
 		this.teamSpawn = teamSpawn;
 		this.color = TeamColor.valueOf(color.toUpperCase());
-		name = this.color.toString();
+		name = this.toString();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void setColor(String color)
 	{
 		this.color = TeamColor.valueOf(color.toUpperCase());
-		if 		(this.color == TeamColor.BLUE) 		teamBlock.setType(Material.BLUE_GLAZED_TERRACOTTA);
-		else if (this.color == TeamColor.RED) 		teamBlock.setType(Material.RED_GLAZED_TERRACOTTA);
-		else if (this.color == TeamColor.GREEN) 	teamBlock.setType(Material.GREEN_GLAZED_TERRACOTTA);
-		else if (this.color == TeamColor.YELLOW) 	teamBlock.setType(Material.YELLOW_GLAZED_TERRACOTTA);
+		if (this.color == TeamColor.BLUE)
+		{
+			teamBlock.setType(Material.CONCRETE);
+			teamBlock.setData((byte) 11);
+		}
+		else if (this.color == TeamColor.RED)
+		{
+			teamBlock.setType(Material.CONCRETE);
+			teamBlock.setData((byte) 14);
+		}
+		else if (this.color == TeamColor.GREEN)
+		{
+			teamBlock.setType(Material.CONCRETE);
+			teamBlock.setData((byte) 5);
+		}
+		else if (this.color == TeamColor.YELLOW)
+		{
+			teamBlock.setType(Material.CONCRETE);
+			teamBlock.setData((byte) 4);
+		}
 		
 		name = this.color.toString();
 	}

@@ -219,6 +219,17 @@ public class GameCube
 		return true;
 	}
 	
+	private void swapFacets(int oldFacet, int newFacet) 
+	{
+		Block tmpBlock;
+		for (int i = 0; i < facet[oldFacet].size(); i++) 
+		{
+			tmpBlock = facet[newFacet].get(i);
+			facet[newFacet].set(i, facet[oldFacet].get(i));
+			facet[newFacet].set(i, tmpBlock);
+		}
+	}
+	
 	/*
 	 * Координаты граней куба, относительно координат самого куба
 	 * 0 - верх
@@ -232,50 +243,50 @@ public class GameCube
 	 * Верх и низ определяет ось Oy. Координата Y верхней стороны всегда больше, чем координата Y нижней
 	 */
 	
-	private void swapFacets(int oldFacet, int newFacet) 
-	{
-		Block tmpBlock;
-		for (int i = 0; i < facet[oldFacet].size(); i++) 
-		{
-			tmpBlock = facet[newFacet].get(i);
-			facet[newFacet].set(i, facet[oldFacet].get(i));
-			facet[newFacet].set(i, tmpBlock);
-		}
-	}
-	
 	public void rotate()
 	{
-		int oldFacet = activeFacet;
 		if (activeFacet == 0)
 		{
-			activeFacet = 1;
-			swapFacets(oldFacet, activeFacet);
+			swapFacets(0, 3);
+			swapFacets(0, 1);
+			swapFacets(0, 2);
+			activeFacet = 3;
 			
+		}
+		else if (activeFacet == 3)
+		{
+			activeFacet = 5;
+			swapFacets(3, 5);
+			swapFacets(3, 2);
+			swapFacets(3, 4);
+		}
+		else if (activeFacet == 5)
+		{
+			activeFacet = 1;
+			swapFacets(5, 1);
+			swapFacets(5, 4);
+			swapFacets(5, 0);
 		}
 		else if (activeFacet == 1)
 		{
 			activeFacet = 2;
-			swapFacets(oldFacet, activeFacet);
+			swapFacets(1, 2);
+			swapFacets(1, 0);
+			swapFacets(1, 3);
 		}
 		else if (activeFacet == 2)
 		{
-			activeFacet = 3;
-			swapFacets(oldFacet, activeFacet);
-		}
-		else if (activeFacet == 3)
-		{
 			activeFacet = 4;
-			swapFacets(oldFacet, activeFacet);
+			swapFacets(2, 4);
+			swapFacets(2, 3);
+			swapFacets(2, 5);
 		}
 		else if (activeFacet == 4)
 		{
-			activeFacet = 5;
-			swapFacets(oldFacet, activeFacet);
-		}
-		else if (activeFacet == 5)
-		{
 			activeFacet = 0;
-			swapFacets(oldFacet, activeFacet);
+			swapFacets(4, 0);
+			swapFacets(4, 5);
+			swapFacets(4, 1);
 		}
 	}
 }
