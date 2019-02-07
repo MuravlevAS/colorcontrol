@@ -21,33 +21,33 @@ public class Game
 	
 	public int rotateInterval = 300;
 	
-	public List<GamePlayer> players;		// Сами игроки
-	public List<GameTeam> teams;			// Команды в игре
-	public int playersCount;				// Текущее количество игроков в игре
-	public int timerIndex = -1;				// Индекс таймера. Нужен для остановки таймера (игры)
-	public int maxPlayers;					// Максимальное количество игроков на карте
-	public int minPlayers;					// Минимальное количество игроков (со скольки игроков начинается игра)
-	public String gameName;					// Название игры
+	public List<GamePlayer> players;						// Сами игроки
+	public List<GameTeam> teams = new ArrayList<GameTeam>();// Команды в игре
+	public int playersCount;								// Текущее количество игроков в игре
+	public int timerIndex = -1;								// Индекс таймера. Нужен для остановки таймера (игры)
+	public int maxPlayers;									// Максимальное количество игроков на карте
+	public int minPlayers;									// Минимальное количество игроков (со скольки игроков начинается игра)
+	public String gameName;									// Название игры
 	
-	public Location gameCenter;				// Центр карты
+	public Location gameCenter;								// Центр карты
 	
-	public int deathmatchTime = 900;		// Время с которого начинается дезмач. В секундах
-	public int deathmatchDuration = 300; 	// Продолжительность дезмач и всей игры. В секундах
+	public int deathmatchTime = 900;						// Время с которого начинается дезмач. В секундах
+	public int deathmatchDuration = 300; 					// Продолжительность дезмач и всей игры. В секундах
 
 	public List<GamePlayer> livingPlayers = null;
 	public CCScoreboard scoreboard;
 	
-	private int timer = 0;					// Основной таймер игры (в секундах)
-	private boolean started = false;   		// Запущена ли игра
-	private boolean deathmatch = false;		
-	private int countdownTimer;				// Таймер обратного отсчёта (до начала игры)
-	public World world;
+	private int timer = 0;									// Основной таймер игры (в секундах)
+	private boolean started = false;   						// Запущена ли игра
+	private boolean deathmatch = false;						// Пишло ли время дезматча
+	private int countdownTimer;								// Таймер обратного отсчёта (до начала игры)
+	public World world;										// Мир
 	
 	private boolean stop;
 	
-	public boolean forcedStart = false;
+	public boolean forcedStart = false;						// Принудительный старт игры
 	
-	public List<GameCube> cubes = new ArrayList<GameCube>();
+	public List<GameCube> cubes = new ArrayList<GameCube>();// Кубы
 	public Game()
 	{
 		players = new ArrayList<GamePlayer>();
@@ -84,13 +84,22 @@ public class Game
 		MainColorControl.game.maxPlayers = maxPlayers;
 		MainColorControl.game.minPlayers = minPlayers;
 	}
-	
+
 	public static void newGame(	int maxPlayers,
 			Location gameCenter)
 	{
 		MainColorControl.game = new Game();
 		MainColorControl.game.maxPlayers = maxPlayers;
 		MainColorControl.game.minPlayers = maxPlayers;
+	}
+	public static void newGame( String name, int maxPlayers,
+			Location gameCenter)
+	{
+		MainColorControl.game = new Game();
+		MainColorControl.game.gameName = name;
+		MainColorControl.game.maxPlayers = maxPlayers;
+		MainColorControl.game.minPlayers = maxPlayers;
+		MainColorControl.game.setCenter(gameCenter);
 	}
 
 	/*************/
@@ -129,7 +138,7 @@ public class Game
 			GameCube cube = new GameCube(loc, gameTeam, item);
 			cubes.add(cube);
 		}
-		
+		saveInConfig();
 	}
 	
 	public void createCube(Location loc, String id)
@@ -146,10 +155,10 @@ public class Game
 		else
 		{
 			ItemStack item = new ItemStack(Material.matchMaterial(id));
-			GameCube cube = new GameCube(loc, item);
-			cubes.add(cube);
+			
+			cubes.add(new GameCube(loc, item));
 		}
-		
+		saveInConfig();
 	}
 	
 	public void addTeam(Location teamSpawn)
@@ -354,24 +363,18 @@ public class Game
 		return players;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void getFromConfig()
 	{
-		FileConfiguration config = MainColorControl.initConfiguration();
+		MainColorControl.initConfiguration();
+		FileConfiguration config = MainColorControl.config; 
 		int maxPlayers = config.getInt("game.max-players");
 		int minPlayers = config.getInt("game.min-players");
 		int deathmatchTime = config.getInt("game.dm-time");
 		int deathmatchDuration = config.getInt("game.dm-dur");
 		Location gameCenter = (Location)config.get("game.center");
-		List<GameTeam> teams = new ArrayList<GameTeam>();
-		List<GameCube> cubes = new ArrayList<GameCube>();		
-		for (Object gameTeam : config.getList("game.teams")) 
-		{
-			teams.add((GameTeam) gameTeam);
-		}
-		for (Object gameCube : config.getList("game.cubes")) 
-		{
-			cubes.add((GameCube)gameCube);
-		}
+		List<GameTeam> teams = (List<GameTeam>) config.getList("game.teams", new ArrayList<GameCube>());
+		List<GameCube> cubes = (List<GameCube>) config.getList("game.cubes", new ArrayList<GameCube>());
 		newGame(maxPlayers, minPlayers, deathmatchTime, deathmatchDuration, teams, gameCenter);
 		
 		MainColorControl.game.cubes = cubes;
@@ -388,7 +391,6 @@ public class Game
 	
 	public void saveInConfig()
 	{
-		MainColorControl.config.getList("");
 		MainColorControl.config.set("game.name", gameName);
 		MainColorControl.config.set("game.max-players", maxPlayers);
 		MainColorControl.config.set("game.min-players", minPlayers);

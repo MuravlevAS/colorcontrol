@@ -13,12 +13,11 @@ gameserver: true
 hight: 50
 
 # game:
-#   name: name
-#   max-players: 10
-#   min-players: 10
-#   center: {}
-#   dm-time: 900
-#   dm-dur: 300
-#   cubes: []
-#   teams: []
- 
+  # name: name
+  # max-players: 10
+  # min-players: 10
+  # center: {}
+  # dm-time: 900
+  # dm-dur: 300
+  # cubes: []
+  # teams: []

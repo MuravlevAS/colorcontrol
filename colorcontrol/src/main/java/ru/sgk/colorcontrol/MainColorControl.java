@@ -6,12 +6,15 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ru.sgk.colorcontrol.cmd.ColorControlCommand;
 import ru.sgk.colorcontrol.data.MySQLMain;
 import ru.sgk.colorcontrol.events.MainEvents;
 import ru.sgk.colorcontrol.game.Game;
+import ru.sgk.colorcontrol.game.GameCube;
+import ru.sgk.colorcontrol.game.GameTeam;
 
 public class MainColorControl extends JavaPlugin
 {
@@ -28,9 +31,11 @@ public class MainColorControl extends JavaPlugin
 	{
 		logger = getLogger();
 		plugin = this;
-		initConfiguration();
-		debug = config.getBoolean("debug");
-		
+		ConfigurationSerialization.registerClass(GameCube.class);
+		ConfigurationSerialization.registerClass(GameTeam.class);
+		initConfiguration().options().copyDefaults(true);
+		MainColorControl.debug = config.getBoolean("debug");
+		saveConfiguration();
 		new MySQLMain();
 		
 		regCmdList();
@@ -52,21 +57,19 @@ public class MainColorControl extends JavaPlugin
 		logger.info("§aПлагин выключен!");
 	}
 	
-	public static void initConfiguration() 
+	public static FileConfiguration initConfiguration() 
 	{
 		config = plugin.getConfig();
-		config.options().copyDefaults(true);
-		debugMessage("§rКонфиг загружен");
+		return config;
 	}
 	public static void saveConfiguration()
 	{
 		try {
-			config.save("config.yml");
-			debugMessage("§rКонфиг сохранён");
+			config.save(plugin.getDataFolder().getPath() + "/config.yml");
 		} catch (IOException e) {
-			debugMessage("§cОшибка при сохранении конфига");
 			e.printStackTrace();
 		}
+		debugMessage("§rКонфиг сохранён");
 	}
 	public void regCmdList()
 	{

@@ -1,15 +1,18 @@
 package ru.sgk.colorcontrol.game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
 
-public class GameTeam 
+public class GameTeam implements ConfigurationSerializable 
 {
 	public Location teamSpawn;
 	public List<Player> playersInTeam = new ArrayList<Player>();
@@ -50,6 +53,31 @@ public class GameTeam
 		this.teamSpawn = teamSpawn;
 		this.color = TeamColor.valueOf(color.toUpperCase());
 		name = this.toString();
+	}
+
+	public GameTeam(Map<String, Object> map)
+	{
+		this.maxPlayers = (Integer) map.get("max-players");
+		this.teamSize = (Integer) map.get("size");
+		this.health = (Integer) map.get("health");
+		this.color = TeamColor.valueOf((String) map.get("color"));
+		this.teamSpawn = (Location) map.get("spawn");
+		
+	}
+	public Map<String, Object> serialize() 
+	{
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("max-players", maxPlayers);
+		map.put("size", teamSize);
+		map.put("health", health);
+		map.put("color", color.toString());
+		map.put("spawn", teamSpawn);
+		return map;
+	}
+	
+	public static GameTeam deserialize(Map<String, Object> map)
+	{
+		return new GameTeam(map);
 	}
 	
 	@SuppressWarnings("deprecation")
