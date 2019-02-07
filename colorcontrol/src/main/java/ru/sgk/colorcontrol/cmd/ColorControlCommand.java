@@ -135,7 +135,8 @@ public class ColorControlCommand implements CommandExecutor
 					{
 						try {
 							int maxPlayers = Integer.parseInt(args[2]);
-							Game.newGame(maxPlayers, player.getLocation());
+							Game.newGame(args[1], maxPlayers, player.getLocation());
+							MainColorControl.game.saveInConfig();
 						}catch(Exception e)
 						{
 							sendMessage(sender, "§cНеправильно введены аргументы!");
