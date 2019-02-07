@@ -14,7 +14,6 @@ public class GameCube
 {
 	public GameTeam cubeTeam;
 	
-	public int rotateInterval;
 	public List<Block>[] facet;		// Все грани куба
 	public boolean[] activeFacets;	// Активная грань - грань куба, находящаяся сверху
 	public int activeFacet = 1;		// Индекс активной грани			
@@ -30,7 +29,6 @@ public class GameCube
 	@SuppressWarnings("unchecked")
 	public GameCube() 
 	{
-		this.rotateInterval = 5*60;
 		this.facet = new List[6];
 		for (int i = 0; i < 6; i++) {
 			this.facet[i] = new ArrayList<Block>();
@@ -42,7 +40,6 @@ public class GameCube
 	@SuppressWarnings("unchecked")
 	public GameCube(Location PlayerLoc, GameTeam team, ItemStack item)
 	{
-		this.rotateInterval = 5*60;
 		this.facet = new List[6];
 		for (int i = 0; i < 6; i++) {
 			this.facet[i] = new ArrayList<Block>();
@@ -62,7 +59,6 @@ public class GameCube
 	@SuppressWarnings("unchecked")
 	public GameCube(Location PlayerLoc, ItemStack item)
 	{
-		this.rotateInterval = 5*60;
 		this.facet = new List[6];
 		for (int i = 0; i < 6; i++) {
 			this.facet[i] = new ArrayList<Block>();

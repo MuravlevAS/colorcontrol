@@ -19,6 +19,8 @@ public class Game
 {
 	public static boolean reloading = false;
 	
+	public int rotateInterval = 300;
+	
 	public List<GamePlayer> players;		// Сами игроки
 	public List<GameTeam> teams;			// Команды в игре
 	public int playersCount;				// Текущее количество игроков в игре
@@ -374,6 +376,14 @@ public class Game
 		
 		MainColorControl.game.cubes = cubes;
 		
+	}
+	
+	public void rotateCubes()
+	{
+		for (GameCube gameCube : cubes)
+		{
+			gameCube.rotate();
+		}
 	}
 	
 	public void saveInConfig()
