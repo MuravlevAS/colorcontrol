@@ -21,7 +21,7 @@ public class MainColorControl extends JavaPlugin
 	public static String prefix = "§bColorControl §8>> ";
 	public static boolean debug = false;
 	public static World world;
-	public static Game game;
+	public static Game game = null;
 	
 	@Override
 	public void onEnable() 
@@ -52,12 +52,11 @@ public class MainColorControl extends JavaPlugin
 		logger.info("§aПлагин выключен!");
 	}
 	
-	public static FileConfiguration initConfiguration() 
+	public static void initConfiguration() 
 	{
 		config = plugin.getConfig();
 		config.options().copyDefaults(true);
 		debugMessage("§rКонфиг загружен");
-		return config;
 	}
 	public static void saveConfiguration()
 	{

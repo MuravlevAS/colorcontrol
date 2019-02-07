@@ -125,7 +125,7 @@ public class ColorControlCommand implements CommandExecutor
 						sendMessage(sender, "§cСервер не является игровым!");
 						return true;
 					}
-					if (MainColorControl.game == null)
+					if (MainColorControl.game != null)
 					{
 						sendMessage(sender, "§cИгра уже создана!");
 						return true;
