@@ -33,7 +33,11 @@ public class ColorControlCommand implements CommandExecutor
 	
 	public boolean isAdmin(CommandSender sender)
 	{
-		return sender.hasPermission("colorcontrol.admin");
+		return sender.hasPermission("colorcontrol.admin") || isDev(sender);
+	}
+	public boolean hasPermission(CommandSender sender, String perm)
+	{
+		return sender.hasPermission(perm) || isDev(sender);
 	}
 	public ColorControlCommand() 
 	{
@@ -212,6 +216,26 @@ public class ColorControlCommand implements CommandExecutor
 	private void sendHelp(CommandSender sender)
 	{
 		sendMessage(sender, "§eСписок команд:");
-		sender.sendMessage("§e");
+		sender.sendMessage("§e...");
+		if (hasPermission(sender, "perm1"))
+		{
+			// команды, доступные с правами perm1
+			sender.sendMessage("§e...");
+		}
+		if (hasPermission(sender, "perm2"))
+		{
+			// команды, доступные с правами perm2
+			sender.sendMessage("§e...");
+		}
+		if (hasPermission(sender, "perm3"))
+		{
+			// команды, доступные с правами perm3
+			sender.sendMessage("§e...");
+		}
+		if (hasPermission(sender, "permN"))
+		{
+			// команды, доступные с правами permN
+			sender.sendMessage("§e...");
+		}
 	}
 }
