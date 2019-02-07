@@ -197,14 +197,6 @@ public class ColorControlCommand implements CommandExecutor
 						sendMessage(sender, "§cИспользование: /colorcontrol setcube <id> [team]");
 					}
 				}
-				else if (args[0].equalsIgnoreCase("rotatecube")) 
-				{
-					if (gameServer)
-						if (MainColorControl.game != null)
-						{
-							MainColorControl.game.rotateCubes();
-						}
-				}
 				else if (args[0].equalsIgnoreCase("help"))
 				{
 					sendHelp(sender);
