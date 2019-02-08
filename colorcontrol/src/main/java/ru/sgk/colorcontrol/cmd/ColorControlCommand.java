@@ -234,40 +234,68 @@ public class ColorControlCommand implements CommandExecutor
 				{
 					sendHelp(sender);
 				}
-				else if (args[0].equalsIgnoreCase("setteamhealth")){
-					if(args.length == 1) {
+				else if (args[0].equalsIgnoreCase("setteamhealth"))
+				{
+					if(args.length == 1) 
+					{
 						sendMessage(sender, "§cИспользование: /colorcontrol setteamhealth <health>");
-					}else {
+					}
+					else 
+					{
 						MainColorControl.debugMessage("§rИгрок изменил хп командам");
 					}
-				}else if(args[0].equalsIgnoreCase("setcenter")) {
+				}
+				else if(args[0].equalsIgnoreCase("setcenter")) 
+				{
 					MainColorControl.debugMessage("§rИгрок изменил центр");
 					
-				}else if(args[0].equalsIgnoreCase("setdeathmatch")) {
-					if(args.length == 1) {
+				}
+				else if(args[0].equalsIgnoreCase("setdeathmatch")) 
+				{
+					if(args.length == 1) 
+					{
 						sendMessage(sender, "§cИспользование: /colorcontrol setdeathmatch <timeInMinutes>");
-					}else {
+					}
+					else 
+					{
 						MainColorControl.debugMessage("§rИгрок изменил время до ДМ");
 					}
-				}else if(args[0].equalsIgnoreCase("setdeathmatchduration")) {
-					if(args.length == 1) {
+				}
+				else if(args[0].equalsIgnoreCase("setdeathmatchduration")) 
+				{
+					if(args.length == 1) 
+					{
 						sendMessage(sender, "§cИспользование: /colorcontrol setdeathmatchduration <timeInMinutes>");
-					}else {
+					}
+					else 
+					{
 						MainColorControl.debugMessage("§rИгрок изменил длительность ДМ");
 					}
-				}else if(args[0].equalsIgnoreCase("maxplayers")) {
-					if(args.length == 1) {
+				}
+				else if(args[0].equalsIgnoreCase("maxplayers")) 
+				{
+					if(args.length == 1) 
+					{
 						sendMessage(sender, "§cИспользование: /colorcontrol maxplayers <players>");
-					}else {
+					}
+					else 
+					{
 						MainColorControl.debugMessage("§rИгрок изменил maxplayers");
 					}
-				}else if(args[0].equalsIgnoreCase("minplayers")) {
-					if(args.length == 1) {
+				}
+				else if(args[0].equalsIgnoreCase("minplayers")) 
+				{
+					if(args.length == 1) 
+					{
 						sendMessage(sender, "§cИспользование: /colorcontrol minplayers <players>");
-					}else {
+					}
+					else 
+					{
 						MainColorControl.debugMessage("§rИгрок изменил minplayers");
 					}
-				}else {
+				}
+				else 
+				{
 					sendMessage(sender, "§cНеизвестная команда. Введите /colorcontrol help для просморта списка команд.");
 				}
 			}
