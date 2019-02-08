@@ -161,18 +161,29 @@ public class Game
 		saveInConfig();
 	}
 	
-	public void addTeam(Location teamSpawn)
+	private void setTeamsSize()
 	{
-		GameTeam team1 = new GameTeam(teamSpawn, 1);
-		teams.add(team1);
-		setTeamsHP();
+		int size = maxPlayers / teams.size();
+		for (int i = 0; i < teams.size(); i++) {
+			teams.get(i).teamSize = size;
+		}
 	}
 	
-	void setTeamsHP()
+	public void addTeam(Location teamSpawn)
 	{
-		for (GameTeam team : teams) 
+		GameTeam team = null;
+		if (teams.size() == 0)
+			team = new GameTeam(teamSpawn, 1, TeamColor.RED);
+		else if (teams.size() == 1)
+			team = new GameTeam(teamSpawn, 1, TeamColor.BLUE);
+		else if (teams.size() == 2)
+			team = new GameTeam(teamSpawn, 1, TeamColor.GREEN);
+		else if (teams.size() == 3)
+			team = new GameTeam(teamSpawn, 1, TeamColor.YELLOW);
+		if (teams.size() < 4)
 		{
-			teams.get(teams.indexOf(team)).teamSize = maxPlayers/teams.size();
+			teams.add(team);
+			setTeamsSize();
 		}
 	}
 	
@@ -212,6 +223,13 @@ public class Game
 	public void leave(Player player)
 	{
 		leave(new GamePlayer(player));
+	}
+	
+	public void start(boolean forcedStart)
+	{
+		if (timerIndex != -1) return;
+		this.forcedStart = forcedStart;
+		start();
 	}
 	
 	@SuppressWarnings("deprecation")
