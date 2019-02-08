@@ -10,19 +10,19 @@ import ru.sgk.colorcontrol.game.Game;
 
 public class ColorControlCommand implements CommandExecutor
 {
-	// cc join									- Тут всё ясно (join будет уже в отдельном плагине для лобби, это я сам сделаю)
-	//// cc leave								- -------------
-	//// cc create <name> <maxPlayers>			- -------------
-	// cc setteams <2|4>						- Устанавливает количество команд 2 или 4
-	// cc setcenter								- Устанавливает центр поля
-	// cc setteamhealth							- устанавливает количество жизней в команде
-	// cc setdeathmatch <timeInMinutes>			- Устанавливает время с которого начинается дезматч
-	// cc setdeathmatchduration <timeInMinutes> - Устанавливает длительность дезматча
+	// cc join									- Тут всё ясно (join будет уже в отдельном плагине для лобби, это я сам сделаю)      [Y]
+	//// cc leave								- -------------                                                                      [X]
+	//// cc create <name> <maxPlayers>			- -------------                                                                      [X]
+	// cc setteams <2|4>						- Устанавливает количество команд 2 или 4                                            [X]
+	// cc setcenter								- Устанавливает центр поля                                                           [X]
+	// cc setteamhealth	<health>				- устанавливает количество жизней в команде                                          [X]
+	// cc setdeathmatch <timeInMinutes>			- Устанавливает время с которого начинается дезматч                                  [X]
+	// cc setdeathmatchduration <timeInMinutes> - Устанавливает длительность дезматча                                                [X]
 	// Максимальная продолжительность игры равна сумме аргументов двух предыдущих команд
-	// cc maxplayers <amount> 					- количество игроков с которого начинается игра
-	// cc minplayers <amount> 					- максимальное количество игроков
-	// cc start									- Тут всё ясно
-	// cc stop									- -------------
+	// cc maxplayers <amount> 					- количество игроков с которого начинается игра                                      [X]
+	// cc minplayers <amount> 					- максимальное количество игроков                                                    [X]
+	// cc start									- Тут всё ясно                                                                       [X]
+	// cc stop									- -------------                                                                      [X]
 	
 	private boolean gameServer;
 	
@@ -210,8 +210,40 @@ public class ColorControlCommand implements CommandExecutor
 				{
 					sendHelp(sender);
 				}
-				else
-				{
+				else if (args[0].equalsIgnoreCase("setteamhealth")){
+					if(args.length == 1) {
+						sendMessage(sender, "§cИспользование: /colorcontrol setteamhealth <health>");
+					}else {
+						MainColorControl.debugMessage("§rИгрок изменил хп командам");
+					}
+				}else if(args[0].equalsIgnoreCase("setcenter")) {
+					MainColorControl.debugMessage("§rИгрок изменил центр");
+					
+				}else if(args[0].equalsIgnoreCase("setdeathmatch")) {
+					if(args.length == 1) {
+						sendMessage(sender, "§cИспользование: /colorcontrol setdeathmatch <timeInMinutes>");
+					}else {
+						MainColorControl.debugMessage("§rИгрок изменил время до ДМ");
+					}
+				}else if(args[0].equalsIgnoreCase("setdeathmatchduration")) {
+					if(args.length == 1) {
+						sendMessage(sender, "§cИспользование: /colorcontrol setdeathmatchduration <timeInMinutes>");
+					}else {
+						MainColorControl.debugMessage("§rИгрок изменил длительность ДМ");
+					}
+				}else if(args[0].equalsIgnoreCase("maxplayers")) {
+					if(args.length == 1) {
+						sendMessage(sender, "§cИспользование: /colorcontrol maxplayers <players>");
+					}else {
+						MainColorControl.debugMessage("§rИгрок изменил maxplayers");
+					}
+				}else if(args[0].equalsIgnoreCase("minplayers")) {
+					if(args.length == 1) {
+						sendMessage(sender, "§cИспользование: /colorcontrol minplayers <players>");
+					}else {
+						MainColorControl.debugMessage("§rИгрок изменил minplayers");
+					}
+				}else {
 					sendMessage(sender, "§cНеизвестная команда. Введите /colorcontrol help для просморта списка команд.");
 				}
 			}
@@ -225,16 +257,26 @@ public class ColorControlCommand implements CommandExecutor
 	private void sendHelp(CommandSender sender)
 	{
 		sendMessage(sender, "§eСписок команд:");
-		sender.sendMessage("§e...");
-		if (hasPermission(sender, "perm1"))
+		sendMessage(sender, "§e/cc leave §f- покинуть игру");
+		if (hasPermission(sender, "colorcontrol.dev"))
 		{
 			// команды, доступные с правами perm1
-			sender.sendMessage("§e...");
+		
+			sendMessage(sender, "§c/cc create <название> <макс.игроков> §f- создать арену");
+			sendMessage(sender, "§c/cc setteams <2|4> §f- поставить кол-во команд");
+			sendMessage(sender, "§c/cc setcenter §f- поставить центр");
+			sendMessage(sender, "§c/cc setteamhealth <health> §f- поставить хп команде");
+			sendMessage(sender, "§c/cc setdeathmatch <timeInMinutes> §f- поставить время до ДМ");
+			sendMessage(sender, "§c/cc setdeathmatchduration <timeInMinutes> §f- поставить длительность ДМ");
+			sendMessage(sender, "§c/cc maxplayers <players> §f- поставить макс.игроков");
+			sendMessage(sender, "§c/cc minplayers <players> §f- поставить мин.игроков");
+			//sendMessage(sender, "§c/cc  §f-");
 		}
 		if (hasPermission(sender, "perm2"))
 		{
 			// команды, доступные с правами perm2
-			sender.sendMessage("§e...");
+			sendMessage(sender, "§6/cc start §f- запустить игру");
+			sendMessage(sender, "§6/cc stop §f- остановить игру");
 		}
 		if (hasPermission(sender, "perm3"))
 		{
