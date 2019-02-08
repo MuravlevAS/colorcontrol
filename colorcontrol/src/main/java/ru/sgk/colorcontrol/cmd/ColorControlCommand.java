@@ -21,8 +21,8 @@ public class ColorControlCommand implements CommandExecutor
 	// Максимальная продолжительность игры равна сумме аргументов двух предыдущих команд
 	// cc maxplayers <amount> 					- количество игроков с которого начинается игра
 	// cc minplayers <amount> 					- максимальное количество игроков
-	//// cc start									- Тут всё ясно
-	//// cc stop									- -------------
+	//// cc start								- Тут всё ясно
+	//// cc stop								- -------------
 	
 	private boolean gameServer;
 	
