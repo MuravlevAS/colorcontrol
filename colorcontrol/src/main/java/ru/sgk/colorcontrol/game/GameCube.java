@@ -360,16 +360,22 @@ public class GameCube implements ConfigurationSerializable
 	@SuppressWarnings("deprecation")
 	private void swapFacets(int oldFacet, int newFacet) 
 	{
-		Block tmpBlock;
+		Block oldBlock;
+		Block newBlock;
 		for (int i = 0; i < facet[oldFacet].size(); i++) 
 		{
-			tmpBlock = facet[oldFacet].get(i);
-			facet[oldFacet].get(i).getLocation().getBlock().setType(facet[newFacet].get(i).getLocation().getBlock().getType());
-			facet[oldFacet].get(i).getLocation().getBlock().setData(facet[newFacet].get(i).getLocation().getBlock().getData());
-			facet[newFacet].get(i).getLocation().getBlock().setType(tmpBlock.getLocation().getBlock().getType());
-			facet[newFacet].get(i).getLocation().getBlock().setData(tmpBlock.getLocation().getBlock().getData());
-			facet[oldFacet].set(i, facet[newFacet].get(i).getLocation().getBlock());
-			facet[newFacet].set(i, tmpBlock.getLocation().getBlock());
+			oldBlock = facet[oldFacet].get(i);
+			Material oldMaterial = oldBlock.getType();
+			byte oldData = oldBlock.getData();
+			
+			newBlock = facet[newFacet].get(i);
+			Material newMaterial = newBlock.getType();
+			byte newData = newBlock.getData();
+			
+			newBlock.setType(oldMaterial);
+			newBlock.setData(oldData);
+			oldBlock.setType(newMaterial);
+			oldBlock.setData(newData);
 		}
 	}
 	

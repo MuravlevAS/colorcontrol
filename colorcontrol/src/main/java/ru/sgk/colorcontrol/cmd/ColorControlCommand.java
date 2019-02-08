@@ -13,7 +13,7 @@ public class ColorControlCommand implements CommandExecutor
 	// cc join									- Тут всё ясно (join будет уже в отдельном плагине для лобби, это я сам сделаю)
 	//// cc leave								- -------------
 	//// cc create <name> <maxPlayers>			- -------------
-	// cc setteams <2|4>						- Устанавливает количество команд 2 или 4
+	// cc addteam								- Добавляет команду. Устанавливает её спавн на позицию игрока 
 	// cc setcenter								- Устанавливает центр поля
 	// cc setteamhealth							- устанавливает количество жизней в команде
 	// cc setdeathmatch <timeInMinutes>			- Устанавливает время с которого начинается дезматч
@@ -59,7 +59,7 @@ public class ColorControlCommand implements CommandExecutor
 						if (gameServer)
 						{
 							MainColorControl.debugMessage("§rИгра была принудительно запущена");	
-							MainColorControl.game.start();
+							MainColorControl.game.start(true);
 						}
 						else
 						{
@@ -205,6 +205,30 @@ public class ColorControlCommand implements CommandExecutor
 						{
 							MainColorControl.game.rotateCubes();
 						}
+				}
+				else if (args[0].equalsIgnoreCase("addteam"))
+				{
+					if (!(sender instanceof Player)) return true;
+					Player player = (Player) sender;
+					if (args.length > 1)
+					{
+						if (MainColorControl.game != null)
+						{
+							if (MainColorControl.game.teams.size() < 4)
+							{
+								MainColorControl.game.addTeam(player.getLocation());
+							}
+							else sendMessage(sender, "§cКоманд может быть не больше четырёх");
+						}
+						else
+						{
+							sendMessage(sender, "§cИспользование: /colorcontrol addteam");
+						}
+					}
+					else
+					{
+						sendMessage(sender, "§cИспользование: /colorcontrol addteam");
+					}
 				}
 				else if (args[0].equalsIgnoreCase("help"))
 				{

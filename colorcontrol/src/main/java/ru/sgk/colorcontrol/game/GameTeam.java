@@ -37,22 +37,19 @@ public class GameTeam implements ConfigurationSerializable
 	{
 		this.teamSize = teamSize;
 		this.teamSpawn = teamSpawn;
-		name = this.color.toString();
 	}
 	
 	public GameTeam(Location teamSpawn, int teamSize, TeamColor color)
 	{
 		this.teamSize = teamSize;
 		this.teamSpawn = teamSpawn;
-		this.color = color;
-		name = this.color.toString();
+		setColor(color);
 	}
 	public GameTeam(Location teamSpawn, int teamSize, String color)
 	{
 		this.teamSize = teamSize;
 		this.teamSpawn = teamSpawn;
-		this.color = TeamColor.valueOf(color.toUpperCase());
-		name = this.toString();
+		setColor(color);
 	}
 
 	public GameTeam(Map<String, Object> map)
@@ -60,8 +57,8 @@ public class GameTeam implements ConfigurationSerializable
 		this.maxPlayers = (Integer) map.get("max-players");
 		this.teamSize = (Integer) map.get("size");
 		this.health = (Integer) map.get("health");
-		this.color = TeamColor.valueOf((String) map.get("color"));
 		this.teamSpawn = (Location) map.get("spawn");
+		setColor((String) map.get("color"));
 		
 	}
 	public Map<String, Object> serialize() 
@@ -79,11 +76,15 @@ public class GameTeam implements ConfigurationSerializable
 	{
 		return new GameTeam(map);
 	}
-	
-	@SuppressWarnings("deprecation")
 	public void setColor(String color)
 	{
-		this.color = TeamColor.valueOf(color.toUpperCase());
+		setColor(TeamColor.valueOf(color.toUpperCase()));
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void setColor(TeamColor color)
+	{
+		this.color = color;
 		if (this.color == TeamColor.BLUE)
 		{
 			teamBlock.setType(Material.CONCRETE);
